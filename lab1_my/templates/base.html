@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Food Ordering{% endblock %}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 20px auto; }
+    nav a { margin-right: 12px; }
+    table { border-collapse: collapse; }
+    th, td { padding: 4px 8px; }
+    form.inline { display: inline-block; margin: 2px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">Меню</a>
+    <a href="/orders">Замовлення</a>
+    <a href="/admin">Адмін</a>
+    <a href="/docs">API Docs</a>
+  </nav>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
+</html>

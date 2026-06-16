@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Замовлення{% endblock %}
+{% block content %}
+<h1>Замовлення</h1>
+
+{% if orders %}
+<table border="1">
+  <tr>
+    <th>ID</th><th>Клієнт</th><th>Страва</th><th>К-сть</th><th>Статус</th><th>Змінити</th>
+  </tr>
+  {% for o in orders %}
+  <tr>
+    <td>{{ o.id }}</td>
+    <td>{{ o.customer_name }}</td>
+    <td>{{ o.dish.name if o.dish else '-' }}</td>
+    <td>{{ o.quantity }}</td>
+    <td>{{ o.status.value }}</td>
+    <td>
+      <form method="post" action="/orders/{{ o.id }}/status">
+        <select name="status">
+          <option value="pending" {% if o.status.value=='pending' %}selected{% endif %}>pending</option>
+          <option value="cooking" {% if o.status.value=='cooking' %}selected{% endif %}>cooking</option>
+          <option value="done" {% if o.status.value=='done' %}selected{% endif %}>done</option>
+        </select>
+        <button>OK</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>Замовлень поки немає.</p>
+{% endif %}
+{% endblock %}

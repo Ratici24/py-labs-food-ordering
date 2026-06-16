@@ -1,0 +1,23 @@
+{% extends "menu/base.html" %}
+{% block title %}Меню{% endblock %}
+{% block content %}
+<h1>Меню</h1>
+{% for c in categories %}
+  <h2>{{ c.name }}</h2>
+  <ul>
+    {% for d in c.dishes.all %}
+      <li>
+        {{ d.name }} — {{ d.price }} грн
+        {% if user.is_staff %}
+          [<a href="{% url 'menu:dish_update' d.id %}">edit</a>]
+          [<a href="{% url 'menu:dish_delete' d.id %}">delete</a>]
+        {% endif %}
+      </li>
+    {% empty %}
+      <li><em>немає страв</em></li>
+    {% endfor %}
+  </ul>
+{% empty %}
+  <p>Меню порожнє. Створіть категорії й страви через <a href="/admin/">Django Admin</a>.</p>
+{% endfor %}
+{% endblock %}

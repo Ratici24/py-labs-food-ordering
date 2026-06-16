@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Food{% endblock %}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 20px auto; }
+    nav a, nav span { margin-right: 12px; }
+    table { border-collapse: collapse; }
+    th, td { padding: 4px 8px; border: 1px solid #999; }
+    .errors { color: #c00; }
+    ul.errorlist { color: #c00; padding-left: 16px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'menu:menu' %}">Меню</a>
+    <a href="{% url 'menu:orders' %}">Замовлення</a>
+    <a href="{% url 'menu:order_new' %}">Замовити</a>
+    {% if user.is_staff %}
+      <a href="{% url 'menu:dish_create' %}">+ Страва</a>
+      <a href="/admin/">Django Admin</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <span>{{ user.username }}{% if user.is_staff %} (admin){% endif %}</span>
+      <a href="/admin/logout/?next=/">Вийти</a>
+    {% else %}
+      <a href="/admin/login/?next=/">Увійти</a>
+    {% endif %}
+  </nav>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
+</html>

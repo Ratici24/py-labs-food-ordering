@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Меню{% endblock %}
+{% block content %}
+<h1>Меню</h1>
+
+<form method="get" action="/">
+  <input name="q" value="{{ q }}" placeholder="Пошук страви (ILIKE)">
+  <button>Шукати</button>
+  {% if q %}<a href="/">скинути</a>{% endif %}
+</form>
+
+{% if q %}
+  <h2>Результати пошуку «{{ q }}»</h2>
+  <ul>
+    {% for d in dishes %}
+      <li>{{ d.name }} — {{ d.price }} грн</li>
+    {% else %}
+      <li><em>Нічого не знайдено</em></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  {% for c in categories %}
+    <h2>{{ c.name }}</h2>
+    <ul>
+      {% for d in c.dishes %}
+        <li>{{ d.name }} — {{ d.price }} грн</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Меню порожнє. Зайди в <a href="/admin">/admin</a> і додай страви.</p>
+  {% endfor %}
+{% endif %}
+
+{% if dishes %}
+<h2>Зробити замовлення</h2>
+<form method="post" action="/orders">
+  <label>Ім'я: <input name="customer_name" required></label>
+  <label>Страва:
+    <select name="dish_id" required>
+      {% for d in dishes %}
+        <option value="{{ d.id }}">{{ d.name }} ({{ d.price }} грн)</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>К-сть: <input type="number" name="quantity" value="1" min="1"></label>
+  <button>Замовити</button>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Food{% endblock %}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 20px auto; }
+    nav a { margin-right: 12px; }
+    table { border-collapse: collapse; }
+    th, td { padding: 4px 8px; border: 1px solid #999; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'menu:menu' %}">Меню</a>
+    <a href="{% url 'menu:orders' %}">Замовлення</a>
+  </nav>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
+</html>

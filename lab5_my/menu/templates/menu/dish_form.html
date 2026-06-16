@@ -1,0 +1,11 @@
+{% extends "menu/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button>Зберегти</button>
+  <a href="{% url 'menu:menu' %}">Скасувати</a>
+</form>
+{% endblock %}

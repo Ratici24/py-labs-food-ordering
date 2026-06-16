@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Статистика{% endblock %}
+{% block content %}
+<h1>Топ-5 страв за замовленнями</h1>
+<p><em>Реалізовано через raw SQL запит до Postgres через psycopg.</em></p>
+
+<table border="1">
+  <tr><th>Страва</th><th>Замовлено (шт.)</th></tr>
+  {% for name, total in rows %}
+    <tr><td>{{ name }}</td><td>{{ total }}</td></tr>
+  {% else %}
+    <tr><td colspan="2"><em>Немає даних</em></td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

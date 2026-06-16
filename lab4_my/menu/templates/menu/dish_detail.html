@@ -1,0 +1,15 @@
+{% extends "menu/base.html" %}
+{% block title %}{{ dish.name }}{% endblock %}
+{% block content %}
+<h1>{{ dish.name }}</h1>
+<p>Ціна: {{ dish.price }} грн</p>
+
+<h2>Замовити</h2>
+<form method="post" action="{% url 'menu:place_order' dish.id %}">
+  <label>Ім'я: <input name="customer_name" required></label>
+  <label>Кількість: <input type="number" name="quantity" value="1" min="1"></label>
+  <button>Замовити</button>
+</form>
+
+<p><a href="{% url 'menu:menu' %}">← назад до меню</a></p>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "menu/base.html" %}
+{% block title %}Замовлення{% endblock %}
+{% block content %}
+<h1>Замовлення</h1>
+
+{% if not user.is_authenticated %}
+  <p><em>Увійдіть, щоб побачити свої замовлення.</em></p>
+{% endif %}
+
+<table>
+  <tr>
+    <th>ID</th><th>Клієнт</th><th>Страва</th><th>К-сть</th><th>Статус</th>
+    {% if user.is_staff %}<th>Змінити</th>{% endif %}
+  </tr>
+  {% for o in orders %}
+  <tr>
+    <td>{{ o.id }}</td>
+    <td>{{ o.customer_name }}</td>
+    <td>{{ o.dish.name }}</td>
+    <td>{{ o.quantity }}</td>
+    <td>{{ o.status }}</td>
+    {% if user.is_staff %}
+    <td>
+      <form method="post" action="{% url 'menu:order_set_status' o.id %}">
+        {% csrf_token %}
+        <select name="status">
+          <option value="pending" {% if o.status == 'pending' %}selected{% endif %}>pending</option>
+          <option value="cooking" {% if o.status == 'cooking' %}selected{% endif %}>cooking</option>
+          <option value="done" {% if o.status == 'done' %}selected{% endif %}>done</option>
+        </select>
+        <button>OK</button>
+      </form>
+    </td>
+    {% endif %}
+  </tr>
+  {% empty %}
+  <tr><td colspan="6">Замовлень немає</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

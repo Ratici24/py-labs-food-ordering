@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Адмін{% endblock %}
+{% block content %}
+<h1>Панель адміністратора</h1>
+
+<h2>Категорії</h2>
+<ul>
+  {% for c in categories %}<li>{{ c.name }}</li>{% endfor %}
+</ul>
+<form method="post" action="/categories">
+  <input name="name" placeholder="Нова категорія" required>
+  <button>Додати категорію</button>
+</form>
+
+<h2>Страви</h2>
+<table border="1">
+  <tr><th>ID</th><th>Назва / Ціна / Категорія</th><th>Видалити</th></tr>
+  {% for d in dishes %}
+  <tr>
+    <td>{{ d.id }}</td>
+    <td>
+      <form class="inline" method="post" action="/dishes/{{ d.id }}/update">
+        <input name="name" value="{{ d.name }}" required>
+        <input type="number" step="0.01" name="price" value="{{ d.price }}" required>
+        <select name="category_id">
+          {% for c in categories %}
+            <option value="{{ c.id }}" {% if c.id == d.category_id %}selected{% endif %}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+        <button>Зберегти</button>
+      </form>
+    </td>
+    <td>
+      <form class="inline" method="post" action="/dishes/{{ d.id }}/delete">
+        <button>Видалити</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Додати страву</h3>
+<form method="post" action="/dishes">
+  <input name="name" placeholder="Назва" required>
+  <input type="number" step="0.01" name="price" placeholder="Ціна" required>
+  <select name="category_id" required>
+    {% for c in categories %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
+  </select>
+  <button>Додати</button>
+</form>
+{% endblock %}

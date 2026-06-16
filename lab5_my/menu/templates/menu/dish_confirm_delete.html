@@ -1,0 +1,10 @@
+{% extends "menu/base.html" %}
+{% block title %}Видалити{% endblock %}
+{% block content %}
+<h1>Видалити «{{ dish.name }}»?</h1>
+<form method="post">
+  {% csrf_token %}
+  <button>Так, видалити</button>
+  <a href="{% url 'menu:menu' %}">Скасувати</a>
+</form>
+{% endblock %}
